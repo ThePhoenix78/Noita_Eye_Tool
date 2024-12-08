@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from lumikki import codes, format_data, encode_data, to_list, set_symbols
+from lumikki import codes, format_data, encode_data_trinome, to_list, to_numbers
 
 
 res: list = [0]
@@ -25,14 +25,16 @@ def update_window():
     data: str = ""
 
     for code in codes:
-        # left right bottom | right left top
-        code = set_symbols(code, symbol)
-        temp: list = encode_data(data=to_list(code), base=base, mode=[chaine1, chaine2])
+        code = to_numbers(code, symbol)
+        temp: list = encode_data_trinome(data=to_list(code), base=base, mode=[chaine1, chaine2])
         data += format_data(data=temp, offset=offset) + "\n"
 
     text_resultat.delete(1.0, tk.END)
     text_resultat.insert(tk.END, data)
     res[0] = data
+
+    # root.clipboard_clear()
+    # root.clipboard_append(data)
 
 
 def copy_to():

@@ -153,9 +153,14 @@ class Orientation:
         return self.list_order
 
 
-def set_symbols(data: str, order: str = "01234") -> str:
+def to_numbers(data: str, order: str = "01234") -> str:
     return data.replace("•", order[0]).replace("↑", order[1])\
     .replace("→", order[2]).replace("↓", order[3]).replace("←", order[4])
+
+
+def to_symbols(data: str, order: str = "•↑→↓←") -> str:
+    return data.replace("0", order[0]).replace("1", order[1])\
+    .replace("2", order[2]).replace("3", order[3]).replace("4", order[4])
 
 
 def to_list(data: str) -> list:
@@ -167,7 +172,7 @@ def to_list(data: str) -> list:
     return data_list
 
 
-def encode_data(data: list, base: int = 5, mode: str = ["lrb", "rlt"]) -> list:
+def encode_data_trinome(data: list, base: int = 5, mode: str = ["lrb", "rlt"]) -> list:
     encoded: list = []
 
     d: Orientation = Orientation(mode)
