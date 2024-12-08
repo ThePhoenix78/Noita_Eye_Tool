@@ -117,7 +117,6 @@ codes: list = [east1, west1, east2, west2, east3, west3, east4, west4, east5]
 for i in range(len(codes)):
     codes[i]: str = codes[i].replace("0", "•").replace("1", "↑")\
     .replace("2", "→").replace("3", "↓").replace("4", "←")
-    print(codes[i])
 
 
 class Orientation:
