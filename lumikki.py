@@ -201,7 +201,7 @@ def encode_data(data: list, base: int = 5, mode: str = ["lrb", "rlt"]) -> list:
     return encoded
 
 
-def format_data(data: list, offset: int = 32) -> str:
+def format_data(data: str, offset: int = 32) -> str:
     if offset != "no":
         data: list = [chr(o+offset) for o in data]
 
