@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 from lumikki import codes, format_data, encode_data_trinome, to_int_list, to_numbers
 
-
 res: list = [0]
 
 

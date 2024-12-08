@@ -1,9 +1,7 @@
 from lumikki import codes, to_symbols, to_numbers
 import pygame, random
 
-
 pygame.init()
-
 
 SCREEN_WIDTH: int = 1800
 SCREEN_HEIGHT: int = 1000
