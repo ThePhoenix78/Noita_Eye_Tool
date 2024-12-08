@@ -154,12 +154,12 @@ class Orientation:
         return self.list_order
 
 
-def set_symbols(data: str, order: str = "01234"):
+def set_symbols(data: str, order: str = "01234") -> str:
     return data.replace("•", order[0]).replace("↑", order[1])\
     .replace("→", order[2]).replace("↓", order[3]).replace("←", order[4])
 
 
-def to_list(data: str) ->list:
+def to_list(data: str) -> list:
     data_list: list = data.split("\n")
 
     for i in range(len(data_list)):
@@ -205,12 +205,12 @@ def format_data(data: list, offset: int = 32) -> str:
     if offset != "no":
         data: list = [chr(o+offset) for o in data]
 
-    n: str = ""
+    text: str = ""
 
     for e in data:
-        n += str(e)
+        text += str(e)
 
         if offset == "no":
-            n += " "
+            text += " "
 
-    return n
+    return text
