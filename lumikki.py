@@ -158,7 +158,7 @@ def to_symbols(data: str, order: str = "•↑→↓←") -> str:
     .replace("2", order[2]).replace("3", order[3]).replace("4", order[4])
 
 
-def to_list(data: str) -> list:
+def to_int_list(data: str) -> list:
     data_list: list = data.split("\n")
 
     for i in range(len(data_list)):
@@ -200,7 +200,7 @@ def encode_data_trinome(data: list, base: int = 5, mode: str = ["lrb", "rlt"]) -
     return encoded
 
 
-def format_data(data: str, offset: int = 32) -> str:
+def format_data(data: str, offset: int = 32, encoding: str = "utf8") -> str:
     if offset != "no":
         data: list = [chr(o+offset) for o in data]
 
@@ -212,4 +212,4 @@ def format_data(data: str, offset: int = 32) -> str:
         if offset == "no":
             text += " "
 
-    return text
+    return text.encode(encoding)# .decode("ISO-8859-7")

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from lumikki import codes, format_data, encode_data_trinome, to_list, to_numbers
+from lumikki import codes, format_data, encode_data_trinome, to_int_list, to_numbers
 
 
 res: list = [0]
@@ -10,6 +10,8 @@ def update_window():
     symbol = entry_symbol.get()
     chaine1 = entry_chaine1.get()
     chaine2 = entry_chaine2.get()
+    encoding = entry_encoding.get()
+    encoding = encoding.replace(" ", "-")
 
     try:
         base = int(entry_entier.get())
@@ -22,12 +24,12 @@ def update_window():
     except ValueError:
         offset = "no"
 
-    data: str = ""
+    data: str = b""
 
     for code in codes:
         code = to_numbers(code, symbol)
-        temp: list = encode_data_trinome(data=to_list(code), base=base, mode=[chaine1, chaine2])
-        data += format_data(data=temp, offset=offset) + "\n"
+        temp: list = encode_data_trinome(data=to_int_list(code), base=base, mode=[chaine1, chaine2])
+        data += format_data(data=temp, offset=offset, encoding=encoding) + b"\n"
 
     text_resultat.delete(1.0, tk.END)
     text_resultat.insert(tk.END, data)
@@ -78,7 +80,14 @@ label_offset.pack(pady=[7, 5])
 
 entry_offset = tk.Entry(root, justify="center")
 entry_offset.insert(0, "32")
-entry_offset.pack(padx=50, pady=[0, 7])
+entry_offset.pack(padx=50, pady=[7, 5])
+
+label_encoding = tk.Label(root, text="Encoding")
+label_encoding.pack(pady=[7, 5])
+
+entry_encoding = tk.Entry(root, justify="center")
+entry_encoding.insert(0, "utf-8")
+entry_encoding.pack(padx=50, pady=[0, 7])
 
 button_concatener = tk.Button(root, text="Generate", command=update_window)
 button_concatener.pack(pady=[10, 10])
