@@ -237,11 +237,12 @@ def rotation(data: str, key: str, encoding: str = "utf8") -> str:
     # ord('0') = 48
     # ord('z') = 122
     # 122 - 48 = ord('z') - ord('0') = 74
+    # 48 * 2 = 96
 
     for i, char in enumerate(encoded_data):
         # encoded_data[i] ^= abs(char - encoded_key[i % len(key)])
         # encoded_data[i] ^= encoded_key[i % len(key)]
-        encoded_data[i] += (char + encoded_key[i % len(key)] - 48 * 2)
+        encoded_data[i] += (char + encoded_key[i % len(key)] - 96)
         encoded_data[i] = 48 + (encoded_data[i] % 74)
 
     return format_data(data=encoded_data, offset=0, encoding=encoding).decode(encoding)
