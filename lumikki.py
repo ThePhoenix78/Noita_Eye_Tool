@@ -161,8 +161,8 @@ def to_symbols(data: str, order: str = "•↑→↓←") -> str:
 def to_int_list(data: str) -> list:
     data_list: list = data.split("\n")
 
-    for i in range(len(data_list)):
-        data_list[i]: list = [int(nb) for nb in data_list[i]]
+    for i, elem in enumerate(data_list):
+        data_list[i]: list = [int(nb) for nb in elem]
 
     return data_list
 
@@ -200,7 +200,7 @@ def encode_data_trinome(data: list, base: int = 5, mode: str = ["lrb", "rlt"]) -
     return encoded
 
 
-def format_data(data: str, offset: int = 32, encoding: str = "utf8") -> str:
+def format_data(data: str, offset: int = 32, encoding: str = "utf8") -> bytes:
     if offset != "no":
         data: list = [chr(o+offset) for o in data]
 
@@ -213,3 +213,52 @@ def format_data(data: str, offset: int = 32, encoding: str = "utf8") -> str:
             text += " "
 
     return text.encode(encoding)# .decode("ISO-8859-7")
+
+
+def crypt_with_rotation(data: bytes, key: bytes, encoding: str = "utf8") -> bytes:
+    if not isinstance(key, bytes):
+        key: bytes = key.encode(encoding)
+
+    if not isinstance(data, bytes):
+        data: bytes = bytes(str(data), encoding)
+
+    output: bytes = b""
+
+    for i, elem in enumerate(data):
+        output += bytes([elem ^ key[i % len(key)]])
+
+    return output
+
+
+def rotation(data: str, key: str, encoding: str = "utf8") -> str:
+    encoded_data: str = [ord(c) for c in data]
+    encoded_key: str = [ord(c) for c in key]
+
+    # ord('0') = 48
+    # ord('z') = 122
+    # 122 - 48 = ord('z') - ord('0') = 74
+
+    for i, char in enumerate(encoded_data):
+        # encoded_data[i] ^= abs(char - encoded_key[i % len(key)])
+        # encoded_data[i] ^= encoded_key[i % len(key)]
+        encoded_data[i] += (char + encoded_key[i % len(key)] - 48 * 2)
+        encoded_data[i] = 48 + (encoded_data[i] % 74)
+
+    return format_data(data=encoded_data, offset=0, encoding=encoding).decode(encoding)
+
+
+# Devoted seeker after true wisdom know this we are watching you.
+
+if __name__ == "__main__":
+    data: str = b""
+
+    for code in codes:
+        code = to_numbers(code, "01234")
+        temp: list = encode_data_trinome(data=to_int_list(code), base=5, mode=["lrb", "rlt"])
+        sentence = format_data(data=temp, offset=32, encoding="utf8")
+        # print(crypt_with_rotation(sentence, key="we are watching you").decode("utf8"))
+        rotated_sentence = rotation(data=sentence.decode("utf8"), key="we are watching you", encoding="utf8")
+        data += sentence + b"\n"
+        print(rotated_sentence)
+
+    # print(data.decode("utf8"))
