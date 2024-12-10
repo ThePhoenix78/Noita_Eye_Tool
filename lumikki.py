@@ -231,8 +231,8 @@ def crypt_with_rotation(data: bytes, key: bytes, encoding: str = "utf8") -> byte
 
 
 def rotation(data: str, key: str, encoding: str = "utf8") -> str:
-    encoded_data: str = [ord(c) for c in data]
-    encoded_key: str = [ord(c) for c in key]
+    encoded_data: list = [ord(c) for c in data]
+    encoded_key: list = [ord(c) for c in key]
 
     # ord('0') = 48
     # ord('z') = 122
